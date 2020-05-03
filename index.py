@@ -12,6 +12,7 @@ class Model():
         self.NumberX = math.floor(Model.width/2) #横軸
         self.NumberY = 0 #縦軸
         self.speed = 1
+        self.speedup_flag = 0
         self.point = 0
 
     def map_all(self,list): #横が揃っているか判定する。揃っていたらTrueを返す
@@ -52,9 +53,13 @@ class Model():
             for i in range(Model.height):
                 if self.map_all(self.data[i]): #横が揃っているかどうか判定
                     # 列が揃って削除されたら、スピードアップしてポイント加算
-                    if self.data[i][0] == 2 and i == Model.height - 1:
+                    if self.data[i][0] == 2:
+                        self.point += 10
+                        self.speedup_flag += 1
+                        if self.speedup_flag == 3:
                             self.speed += 1
-                            self.point += 1
+                            self.speedup_flag = 0
+                            
                     for j in range(Model.width):
                         self.data[i][j] = 0
 
@@ -92,6 +97,7 @@ class View():
                 self.canvas.create_text(x+300,y+15,text=self.model.data[i][j],font=("Helvetica",15,"bold"),fill="white",tag="block")
                 if self.model.data[i][j] == 1 or self.model.data[i][j] == 2: #dataが1か2のものを表示
                     self.canvas.create_rectangle(x,y,x+30,y+30,fill="red",outline="white",tag="block")
+        self.canvas.create_text(x+50, y+50, text="point:{}".format(self.model.point), font=("Helvetica",15,"bold"),fill="white",tag="block")
 
 
 class Controller():
