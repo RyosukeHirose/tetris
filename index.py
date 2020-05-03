@@ -11,6 +11,8 @@ class Model():
         self.data = [[0]*Model.width for i in range(Model.height)] #0の要素を入れた2次元配列の作成
         self.NumberX = math.floor(Model.width/2) #横軸
         self.NumberY = 0 #縦軸
+        self.speed = 1
+        self.point = 0
 
     def map_all(self,list): #横が揃っているか判定する。揃っていたらTrueを返す
         judge = []
@@ -49,6 +51,10 @@ class Model():
 
             for i in range(Model.height):
                 if self.map_all(self.data[i]): #横が揃っているかどうか判定
+                    # 列が揃って削除されたら、スピードアップしてポイント加算
+                    if self.data[i][0] == 2 and i == Model.height - 1:
+                            self.speed += 1
+                            self.point += 1
                     for j in range(Model.width):
                         self.data[i][j] = 0
 
@@ -115,7 +121,10 @@ class Controller():
 
         self.model.update()
         self.view.update()
-
+        print("UPDATE:{}".format(self.UPDATE))
+        print("speed:{}".format(self.model.speed))
+        print("total:{}".format(self.UPDATE * self.model.speed))
+        self.UPDATE = 750 // self.model.speed
         self.master.after(self.UPDATE, self.update)
 
 
