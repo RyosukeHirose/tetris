@@ -127,9 +127,6 @@ class Controller():
 
         self.model.update()
         self.view.update()
-        print("UPDATE:{}".format(self.UPDATE))
-        print("speed:{}".format(self.model.speed))
-        print("total:{}".format(self.UPDATE * self.model.speed))
         self.UPDATE = 750 // self.model.speed
         self.master.after(self.UPDATE, self.update)
 

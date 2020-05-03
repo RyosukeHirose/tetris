@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 RUN apt-get update \
     && pip install --upgrade pip \
-    && apt-get install xvfb \
+    && apt-get install xvfb
 
 # macにxサーバーをインストール
 # ディスプレイを設定
